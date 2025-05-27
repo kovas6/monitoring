@@ -27,11 +27,11 @@ jobs:
       - name: Authenticate gcloud
         run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
-      - name: Install gke-gcloud-auth-plugin  # 🔹 Highlighted
+      - name: Install gke-gcloud-auth-plugin
         run: |
           gcloud components install gke-gcloud-auth-plugin -q
 
-      - name: Set use_application_default_credentials true  # 🔹 Highlighted
+      - name: Set use_application_default_credentials true
         run: |
           gcloud config set container/use_application_default_credentials true
 
@@ -56,6 +56,7 @@ jobs:
           helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
             --namespace monitoring \
             --set grafana.enabled=false \
+            --set alertmanager.alertmanagerSpec.resources.requests.memory=100Mi \
             --set resources.requests.memory=300Mi \
             --set resources.limits.memory=600Mi \
             --wait
@@ -64,7 +65,7 @@ jobs:
         run: |
           helm upgrade --install grafana grafana/grafana \
             --namespace monitoring \
-            --set adminPassword=${{ secrets.GRAFANAADMINPASSWORD }} \  # 🔹 Secure usage
+            --set adminPassword=${{ secrets.GRAFANAADMINPASSWORD }} \
             --set service.type=LoadBalancer \
             --set resources.requests.memory=300Mi \
             --set resources.limits.memory=600Mi \
