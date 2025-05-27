@@ -56,7 +56,7 @@ jobs:
           helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
             --namespace monitoring \
             --set grafana.enabled=false \
-            --set alertmanager.alertmanagerSpec.resources.requests.memory=100Mi \
+            --set alertmanager.enabled=false \
             --set resources.requests.memory=300Mi \
             --set resources.limits.memory=600Mi \
             --wait
@@ -67,6 +67,6 @@ jobs:
             --namespace monitoring \
             --set adminPassword=${{ secrets.GRAFANAADMINPASSWORD }} \
             --set service.type=LoadBalancer \
-            --set resources.requests.memory=300Mi \
-            --set resources.limits.memory=600Mi \
+            --set resources.requests.memory=150Mi \
+            --set resources.limits.memory=300Mi \
             --wait
