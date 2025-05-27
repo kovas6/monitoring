@@ -60,7 +60,7 @@ jobs:
             --set resources.requests.memory=300Mi \
             --set resources.limits.memory=600Mi \
             --wait
-
+      #Grafana
       - name: Install Grafana
         run: |
           helm upgrade --install grafana grafana/grafana \
