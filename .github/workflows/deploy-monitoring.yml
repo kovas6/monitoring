@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'monitoring/**'         # Only trigger if files under monitoring/ change
+#    paths:
+#      - 'monitoring/**'         # Only trigger if files under monitoring/ change
 
 jobs:
   deploy-monitoring:
