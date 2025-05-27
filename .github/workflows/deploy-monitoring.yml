@@ -56,12 +56,16 @@ jobs:
           helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
             --namespace monitoring \
             --set grafana.enabled=false \
+            --set resources.requests.memory=300Mi \
+            --set resources.limits.memory=600Mi \
             --wait
 
       - name: Install Grafana
         run: |
           helm upgrade --install grafana grafana/grafana \
             --namespace monitoring \
-            --set adminPassword='admin' \
+            --set adminPassword=${{ secrets.GRAFANAADMINPASSWORD }} \  # 🔹 Secure usage
             --set service.type=LoadBalancer \
+            --set resources.requests.memory=300Mi \
+            --set resources.limits.memory=600Mi \
             --wait
