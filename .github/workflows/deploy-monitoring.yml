@@ -55,8 +55,10 @@ jobs:
         run: |
           helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
             --namespace monitoring \
+            --set prometheusOperator.tls.enabled=false \
             --set grafana.enabled=false \
             --set alertmanager.enabled=false \
+            --set prometheus.prometheusSpec.replicas=1 \
             --set resources.requests.memory=300Mi \
             --set resources.limits.memory=600Mi \
             --wait
